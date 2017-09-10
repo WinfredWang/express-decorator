@@ -1,0 +1,29 @@
+{
+  "name": "express-decorator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/src/main.js",
+  "typings": "dist/src/main",
+  "scripts": {
+    "start": "node dist/test/app.js",
+    "build": "tsc",
+    "build-w": "tsc -w",
+    "test": "jest"
+  },
+  "files": [
+    "dist/src",
+    "package.json",
+    "tsconfig.json"
+  ],
+  "author": "Winfred",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4",
+    "body-parser": "^1.18.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.37",
+    "@types/jest": "^20.0.8",
+    "jest": "^21.0.2"
+  }
+}
