@@ -10,7 +10,7 @@ a light-weight module that register restful services by decorator for express.
 ## Quick Start
 
 Create firsr restfult service.
-```
+```javascript
 @Path('/user')
 export class UserService {
 
