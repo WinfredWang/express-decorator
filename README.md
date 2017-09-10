@@ -1,5 +1,5 @@
 ## Express decorator
-a light-weight module to build typeScript application with Express decorators
+a light-weight module to build TypeScript application with Express decorators
 
 
 ## Install
@@ -72,3 +72,4 @@ var server = app.listen(3000, function () {
 - `FormParam(paramName: string)`
 - `Reqeust`
 - `Response`
+- `RegisterService(expressInstance, services:any[] ])`
