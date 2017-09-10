@@ -1,5 +1,5 @@
 ## Express decorator
-a light-weight module that register restful services by decorator for express.
+a light-weight module to build typeScript application with Express decorators
 
 
 ## Install
