@@ -1,14 +1,18 @@
 {
   "name": "express-decorator",
   "version": "1.0.0",
-  "description": "",
+  "description": "Use TypeScript decorators to register express restful service.",
   "main": "dist/src/main.js",
-  "typings": "dist/src/main",
+  "typings": "dist/src/main.d.ts",
   "scripts": {
     "start": "node dist/test/app.js",
     "build": "tsc",
     "build-w": "tsc -w",
     "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WinfredWang/express-decorator.git"
   },
   "files": [
     "dist/src",
@@ -16,7 +20,7 @@
     "tsconfig.json"
   ],
   "author": "Winfred",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.15.4",
     "body-parser": "^1.18.0"
