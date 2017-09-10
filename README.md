@@ -72,4 +72,4 @@ var server = app.listen(3000, function () {
 - `FormParam(paramName: string)`
 - `Reqeust`
 - `Response`
-- `RegisterService(expressInstance, services:any[] ])`
+- `RegisterService(expressInstance, services:any[])`
