@@ -43,7 +43,7 @@ export class UserService {
 ```
 
 Register your service class
-```
+```javascript
 var app = express();
 
 app.get('/', function (req, res) {
