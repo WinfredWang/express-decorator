@@ -1,6 +1,12 @@
 ## Express decorator
 a light-weight module that register restful services by decorator for express.
 
+
+## Install
+```
+npm install express-decorator
+```
+
 ## Features
 - Use `@Path` to register express route for class.
 - Use `@GET/@DELETE/@POST/@PUT` to register sub-route path for a method,
