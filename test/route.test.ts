@@ -33,3 +33,12 @@ test('04.Http put reqeust', () => {
         console.log(err);
     })
 });
+
+test('05.custom response', () => {
+    let user = { name: 'wang', age: 20 };
+    http.get('/user/test/resundefined').then(res => {
+        expect(res).toEqual('custom response');
+    }, (err) => {
+        console.log(err);
+    })
+});

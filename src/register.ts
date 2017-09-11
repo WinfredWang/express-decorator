@@ -62,10 +62,13 @@ export function RegisterService(app, services: any[]) {
 
                 if (result instanceof Promise) {
                     result.then(value => {
-                        res.send(value);
+                        !res.headersSent && res.send(value);
+                    }).catch(err => {
+                        console.log(err);
+                        res.status(500).send('Error occur.')
                     });
-                } else {
-                    res.send(result);
+                } else if (result !== undefined) {
+                    !res.headersSent && res.send(result);
                 }
             };
 

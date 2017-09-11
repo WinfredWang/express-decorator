@@ -10,7 +10,7 @@ export class TestService {
 
     @DELETE('/:id')
     delete( @PathParam('id') id) {
-        return [id];
+        return id;
     }
 
     @POST('')
@@ -21,5 +21,10 @@ export class TestService {
     @PUT('')
     update( @FormParam('user') user) {
         return user;
+    }
+
+    @GET('/test/resundefined')
+    resUndefined( @Response res) {
+        res.send('custom response');
     }
 }   
