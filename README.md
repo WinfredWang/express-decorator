@@ -36,8 +36,13 @@ export class UserService {
     }
 
     @PUT('')
-    update( @FormParam('user') user) {
+    update( @FormParam('user') user, @Response response, @Requst request) {
+        ...
         return user;
+    }
+
+    query(@) {
+
     }
 } 
 ```
@@ -50,7 +55,7 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
-RegisterService(app, [TestService]);
+RegisterService(app, [UserService]);
 
 var server = app.listen(3000, function () {
     var host = server.address().address;
