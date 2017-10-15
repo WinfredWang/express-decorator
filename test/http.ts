@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 let baseUrl = 'http://localhost:3000';
-let request = (subUrl, httpMethod, resType?: string, body?: any) => {
+let request = (subUrl, httpMethod, body?: any, headers?: any) => {
     let option = {
         method: httpMethod,
         body: null,

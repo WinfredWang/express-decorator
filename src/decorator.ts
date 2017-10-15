@@ -96,6 +96,8 @@ let MethodParamFactory = (paramType: string) => {
 export let PathParam = MethodParamFactory('path');
 export let QueryParam = MethodParamFactory('query');
 export let FormParam = MethodParamFactory('form');
+export let CookieParam = MethodParamFactory('cookie');
+export let HeaderParam = MethodParamFactory('header');
 
 let ContextParamFactory = (paramType: string) => {
     return ParamFactory(paramType)

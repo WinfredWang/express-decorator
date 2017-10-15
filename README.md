@@ -10,7 +10,7 @@ npm install express-decorator
 ## Features
 - Use `@Path` to register express route for class.
 - Use `@GET/@DELETE/@POST/@PUT` to register sub-route path for a method,
-- Inject request parameters from `@PathParam/@QueryParam/@FormParam`
+- Inject request parameters from `@PathParam/@QueryParam/@FormParam/CookieParam/HeaderParam`
 - Inject Request,Response From express request.
 
 ## Quick Start
@@ -41,8 +41,16 @@ export class UserService {
         return user;
     }
 
-    query(@) {
+    @GET('/test/cookie')
+    testCookie( @CookieParam('name') p1, @CookieParam('xx') p2) {
 
+        return Promise.resolve([p1, p2]);
+    }
+
+    @GET('/test/header')
+    testHeader( @HeaderParam('Cookie') p1, @HeaderParam('User-Agent') p2) {
+
+        return Promise.resolve([p1, p2]);
     }
 } 
 ```

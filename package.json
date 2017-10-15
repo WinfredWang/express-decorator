@@ -7,7 +7,6 @@
   "scripts": {
     "start": "concurrently \"npm run build-w\"  \"node dist/test/app.js\"",
     "build-w": "tsc -w",
-    "pretest": "npm start",
     "test": "jest",
     "release": " tsc && npm run publish"
   },
@@ -23,8 +22,9 @@
   "author": "Winfred",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.15.4",
-    "body-parser": "^1.18.0"
+    "body-parser": "^1.18.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.4"
   },
   "devDependencies": {
     "@types/express": "^4.0.37",

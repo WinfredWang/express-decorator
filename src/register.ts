@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Router } from "express";
 import * as bodyParser from "body-parser";
+import * as cookieParser from "cookie-parser";
 import { Param, getClassMeta } from './decorator'
 
 /**
@@ -14,6 +15,8 @@ function extractParameters(req, res, params: Param[]) {
         'query': (paramName: string) => req.query[paramName],
         'path': (paramName: string) => req.params[paramName],
         'form': (paramName: string) => req.body[paramName],
+        'cookie': (paramName: string) => req.cookies && req.cookies[paramName],
+        'header': (paramName) => req.get(paramName),
         'request': () => req,
         'response': () => res,
     }
@@ -52,10 +55,8 @@ export function RegisterService(app, services: any[]) {
             let fn = (req, res, next) => {
                 let result;
                 try {
-
                     let args = extractParameters(req, res, routes[methodName]['params']);
                     result = Service.prototype[methodName].apply(serviceInstance, args);
-
                 } catch (err) {
                     handlerError(err, res);
                 }
@@ -78,6 +79,7 @@ export function RegisterService(app, services: any[]) {
 
         app.use(baseUrl,
             bodyParser.json(),
+            cookieParser(),
             router);
     })
 }

@@ -1,4 +1,4 @@
-import { Path, GET, POST, DELETE, PUT, PathParam, QueryParam, FormParam, Request, Response } from '../src/main'
+import { Path, GET, POST, DELETE, PUT, PathParam, QueryParam, FormParam, CookieParam, HeaderParam, Request, Response } from '../src/main'
 
 @Path('/user')
 export class TestService {
@@ -26,5 +26,17 @@ export class TestService {
     @GET('/test/resundefined')
     resUndefined( @Response res) {
         res.send('custom response');
+    }
+
+    @GET('/test/cookie')
+    testCookie( @CookieParam('name') cookieName, @CookieParam('xx') p2) {
+
+        return Promise.resolve([cookieName, p2]);
+    }
+
+    @GET('/test/header')
+    testHeader( @HeaderParam('Cookie') cookieName, @HeaderParam('User-Agent') p2) {
+
+        return Promise.resolve([cookieName, p2]);
     }
 }   
