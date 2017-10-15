@@ -1,6 +1,6 @@
 {
   "name": "express-decorator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Use TypeScript decorators to register express restful service.",
   "main": "dist/src/main.js",
   "typings": "dist/src/main.d.ts",
@@ -30,6 +30,7 @@
     "@types/express": "^4.0.37",
     "@types/jest": "^20.0.8",
     "concurrently": "^3.5.0",
-    "jest": "^21.0.2"
+    "jest": "^21.0.2",
+    "node-fetch": "^1.7.3"
   }
 }
