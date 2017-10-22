@@ -53,20 +53,14 @@ export function RegisterService(app, services: any[]) {
 
             // express route callback
             let fn = (req, res, next) => {
-                let result;
-                try {
-                    let args = extractParameters(req, res, routes[methodName]['params']);
-                    result = Service.prototype[methodName].apply(serviceInstance, args);
-                } catch (err) {
-                    handlerError(err, res);
-                }
+                let args = extractParameters(req, res, routes[methodName]['params']);
+                let result = Service.prototype[methodName].apply(serviceInstance, args);
 
                 if (result instanceof Promise) {
                     result.then(value => {
                         !res.headersSent && res.send(value);
                     }).catch(err => {
-                        console.log(err);
-                        res.status(500).send('Error occur.')
+                        next(err);
                     });
                 } else if (result !== undefined) {
                     !res.headersSent && res.send(result);
@@ -82,9 +76,4 @@ export function RegisterService(app, services: any[]) {
             cookieParser(),
             router);
     })
-}
-
-function handlerError(err, res) {
-    console.log(err);
-    res.status(500).send("System occur error.");
 }

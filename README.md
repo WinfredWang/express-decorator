@@ -83,6 +83,8 @@ var server = app.listen(3000, function () {
 - `PathParam(paramName: string)`
 - `QueryParam(paramName: string)`
 - `FormParam(paramName: string)`
+- `CookieParam(paramName: string)`
+- `HeaderParam(paramName: string)`
 - `Reqeust`
 - `Response`
 - `RegisterService(expressInstance, services:any[])`
