@@ -34,7 +34,6 @@ function extractParameters(req, res, params: Param[]) {
  * ```
  * RegisterService(express, [servies])
  * ```
- * 
  */
 export function RegisterService(app, services: any[]) {
 
@@ -42,19 +41,18 @@ export function RegisterService(app, services: any[]) {
 
     services.forEach((Service) => {
         let meta = getClassMeta(Service.prototype);
-
         let serviceInstance = new Service();
-
         let routes = meta.routes;
-        let baseUrl = meta.baseUrl;
 
         for (const methodName in routes) {
-            let httpMethod = routes[methodName].httpMethod;
+            let methodMeta = routes[methodName];
+            let httpMethod = methodMeta.httpMethod;
+            let midwares = methodMeta.midwares;
 
             // express route callback
             let fn = (req, res, next) => {
-                let args = extractParameters(req, res, routes[methodName]['params']);
-                let result = Service.prototype[methodName].apply(serviceInstance, args);
+                let params = extractParameters(req, res, methodMeta['params']);
+                let result = Service.prototype[methodName].apply(serviceInstance, params);
 
                 if (result instanceof Promise) {
                     result.then(value => {
@@ -68,12 +66,14 @@ export function RegisterService(app, services: any[]) {
             };
 
             // register sub route
-            router[httpMethod].apply(router, [routes[methodName].subUrl, fn]);
+            let params: any[] = [methodMeta.subUrl];
+            midwares && (params = params.concat(midwares));
+            params.push(fn);
+            router[httpMethod].apply(router, params);
         }
-
-        app.use(baseUrl,
-            bodyParser.json(),
-            cookieParser(),
-            router);
+        let params: any[] = [meta.baseUrl, bodyParser.json(), cookieParser()];
+        meta.midwares && (params = params.concat(meta.midwares));
+        params.push(router);
+        app.use.apply(app, params);
     })
 }

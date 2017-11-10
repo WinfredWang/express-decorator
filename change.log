@@ -1,3 +1,9 @@
 
+## verson 1.1.0
+- Support inject midware
+
+### 1.0.4
+- improve exception handler.
+
 ## verson 1.0.3 
 - Support CookieParam and HeaderParam to get corresponding parameter.

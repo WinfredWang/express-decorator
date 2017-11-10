@@ -4,7 +4,7 @@ import { http } from './http'
 test('01.Http get reqeust', () => {
     http.get('/user/xxx?name=tom').then(res => {
 
-        expect(JSON.parse(res)).toEqual(["xxx", "tom"])
+        expect(JSON.parse(res)).toEqual(["xxx", "tom", "test1", "test2"])
     })
 });
 
