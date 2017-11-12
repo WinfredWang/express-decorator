@@ -4,27 +4,27 @@ export type Param = {
     index: number;
 }
 
-export type MethodMeta = {
+export type Method = {
     subUrl: string,
     httpMethod: string,
+    params: Param[],
     midwares: Function[],
-    params: Param[]
 }
 
-export type RouteMeta = {
-    [methodName: string]: MethodMeta;
+export type Router = {
+    [methodName: string]: Method;
 }
-export type ClassMeta = {
+export type Clazz = {
     baseUrl: string,
-    routes: RouteMeta,
+    routes: Router,
     midwares: Function[];
 }
 
-export let getClassMeta = (target): ClassMeta => {
+export let getClazz = (target): Clazz => {
     return (target.$Meta = target.$Meta || { baseUrl: '', routes: {} })
 }
-export let getMethodMeta = (target, methodName): MethodMeta => {
-    let meta = getClassMeta(target);
+export let getMethod = (target, methodName): Method => {
+    let meta = getClazz(target);
 
     let methodMeta = meta.routes[methodName] || (meta.routes[methodName] = {
         subUrl: '',
@@ -37,6 +37,7 @@ export let getMethodMeta = (target, methodName): MethodMeta => {
 }
 
 /**
+ * Service class decorator.
  * 
  * @Path('/user')
  * class UserService {
@@ -45,7 +46,7 @@ export let getMethodMeta = (target, methodName): MethodMeta => {
  */
 export function Path(baseUrl: string, midwares?: Function[]) {
     return function (target) {
-        let meta = getClassMeta(target.prototype);
+        let meta = getClazz(target.prototype);
         meta.baseUrl = baseUrl;
         meta.midwares = midwares;
     }
@@ -55,7 +56,7 @@ let MethodFactory = (httpMehod: string) => {
     return (url: string, midwares?: any[]) => {
         return (target, methodName: string, descriptor: PropertyDescriptor) => {
 
-            let meta = getMethodMeta(target, methodName);
+            let meta = getMethod(target, methodName);
             meta.subUrl = url;
             meta.httpMethod = httpMehod;
             meta.midwares = midwares;
@@ -69,17 +70,15 @@ let MethodFactory = (httpMehod: string) => {
  * 
  * @GET('/user/:name')
  * list(@PathParam('name') name:string)
- * 
  */
 export let GET = MethodFactory('get');
 export let POST = MethodFactory('post');
 export let DELETE = MethodFactory('delete');
 export let PUT = MethodFactory('put');
 
-
 let ParamFactory = (paramType: string, paramName?: string) => {
     return (target, methodName: string, paramIndex: number) => {
-        let meta = getMethodMeta(target, methodName);
+        let meta = getMethod(target, methodName);
         meta.params.push({
             name: paramName ? paramName : paramType,
             index: paramIndex,
@@ -111,8 +110,7 @@ let ContextParamFactory = (paramType: string) => {
 /**
  * 
  * @GET('/get')
- * list(@Request request)
- * 
+ * list(@Request request, @Response res)
  */
 export let Request = ContextParamFactory('request')
 export let Response = ContextParamFactory('response')

@@ -2,7 +2,7 @@ import * as express from "express";
 import { Router } from "express";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
-import { Param, getClassMeta } from './decorator'
+import { Param, getClazz } from './decorator'
 
 /**
  * Extract paramters from request.
@@ -35,13 +35,13 @@ function extractParameters(req, res, params: Param[]) {
  * RegisterService(express, [servies])
  * ```
  */
-export function RegisterService(app, services: any[]) {
+export function RegisterService(app, serviceClazzes: any[]) {
+   
+    let router = Router();
 
-    let router: Router = Router();
-
-    services.forEach((Service) => {
-        let meta = getClassMeta(Service.prototype);
-        let serviceInstance = new Service();
+    serviceClazzes.forEach(ServiceClazz => {
+        let meta = getClazz(ServiceClazz.prototype);
+        let serviceInstance = new ServiceClazz();
         let routes = meta.routes;
 
         for (const methodName in routes) {
@@ -49,10 +49,10 @@ export function RegisterService(app, services: any[]) {
             let httpMethod = methodMeta.httpMethod;
             let midwares = methodMeta.midwares;
 
-            // express route callback
+            // express router callback
             let fn = (req, res, next) => {
                 let params = extractParameters(req, res, methodMeta['params']);
-                let result = Service.prototype[methodName].apply(serviceInstance, params);
+                let result = ServiceClazz.prototype[methodName].apply(serviceInstance, params);
 
                 if (result instanceof Promise) {
                     result.then(value => {
@@ -71,6 +71,8 @@ export function RegisterService(app, services: any[]) {
             params.push(fn);
             router[httpMethod].apply(router, params);
         }
+
+        // regiser base router.
         let params: any[] = [meta.baseUrl, bodyParser.json(), cookieParser()];
         meta.midwares && (params = params.concat(meta.midwares));
         params.push(router);
